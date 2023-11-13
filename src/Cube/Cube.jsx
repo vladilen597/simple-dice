@@ -7,8 +7,22 @@ import dots3texture from './images/dots3.png'
 import dots4texture from './images/dots4.png'
 import dots5texture from './images/dots5.png'
 import dots6texture from './images/dots6.png'
+import * as THREE from 'three'
+import { useThree } from '@react-three/fiber'
 
 const Cube = () => {
+  const { camera } = useThree()
+  const listener = new THREE.AudioListener()
+  camera.add(listener)
+  const audioLoader1 = new THREE.AudioLoader()
+  const tapSound = new THREE.Audio(listener)
+
+  audioLoader1.load('tap.mp3', (buffer) => {
+    tapSound.setBuffer(buffer)
+    tapSound.setLoop(false)
+    tapSound.setVolume(1)
+  })
+
   const boxWidth = 0.5
   const [dots1, dots2, dots3, dots4, dots5, dots6] = useTexture([
     dots1texture,
@@ -29,6 +43,7 @@ const Cube = () => {
   return (
     <mesh
       onClick={() => {
+        tapSound.play()
         api.applyImpulse(
           [
             Math.random() < 0.5 ? Math.random() * -2 : Math.random() * 2,

@@ -20,7 +20,6 @@ function App() {
     setCameraPosition(1)
     cameraRef.current.target.set(0, 0, 0)
   }
-  console.log(cameraPositions[cameraPosition])
 
   return (
     <div className='App'>
